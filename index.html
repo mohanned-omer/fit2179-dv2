@@ -9,6 +9,22 @@
     <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
     <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
     <style>
+        :root {
+            --bg: #F6F3ED;
+            --panel: #FFFFFF;
+            --ink: #172033;
+            --muted: #4F5B66;
+            --soft-muted: #6B7280;
+            --border: #D8D4CA;
+            --navy: #0C2340;
+            --blue: #246FB2;
+            --blue-light: #D9EAF7;
+            --red: #C43D3D;
+            --orange: #B45F06;
+            --green: #177A5B;
+            --purple: #6B5FD3;
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -17,12 +33,12 @@
 
         body {
             font-family: 'Georgia', serif;
-            background: #f8f7f4;
-            color: #1a1a1a;
+            background: var(--bg);
+            color: var(--ink);
         }
 
         .hero {
-            background: #0C2340;
+            background: var(--navy);
             padding: 4rem 6rem 3rem;
             color: white;
         }
@@ -31,7 +47,7 @@
             font-size: 11px;
             letter-spacing: 3px;
             text-transform: uppercase;
-            color: #378ADD;
+            color: var(--blue-light);
             margin-bottom: 1rem;
             font-family: sans-serif;
         }
@@ -46,7 +62,7 @@
 
         .hero p {
             font-size: 1.1rem;
-            color: rgba(255, 255, 255, 0.6);
+            color: rgba(255, 255, 255, 0.84);
             max-width: 600px;
             line-height: 1.7;
             margin-bottom: 2rem;
@@ -57,7 +73,7 @@
             display: grid;
             grid-template-columns: repeat(3, auto);
             gap: 0;
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.24);
             border-radius: 8px;
             overflow: hidden;
             width: fit-content;
@@ -65,8 +81,8 @@
 
         .hero-stat {
             padding: 1.25rem 2rem;
-            border-right: 1px solid rgba(255, 255, 255, 0.15);
-            background: rgba(255, 255, 255, 0.04);
+            border-right: 1px solid rgba(255, 255, 255, 0.24);
+            background: rgba(255, 255, 255, 0.08);
         }
 
         .hero-stat:last-child {
@@ -76,13 +92,13 @@
         .hero-stat-val {
             font-size: 2rem;
             font-weight: 400;
-            color: #378ADD;
+            color: var(--blue-light);
             font-family: sans-serif;
         }
 
         .hero-stat-lab {
             font-size: 11px;
-            color: rgba(255, 255, 255, 0.4);
+            color: rgba(255, 255, 255, 0.76);
             font-family: sans-serif;
             margin-top: 4px;
         }
@@ -98,10 +114,11 @@
         }
 
         .act-label {
-            font-size: 10px;
-            letter-spacing: 3px;
+            font-size: 11px;
+            letter-spacing: 2.2px;
             text-transform: uppercase;
-            color: #888780;
+            color: var(--muted);
+            font-weight: 700;
             font-family: sans-serif;
             margin-bottom: 0.5rem;
             display: flex;
@@ -113,7 +130,7 @@
             content: '';
             flex: 1;
             height: 1px;
-            background: #e0ddd6;
+            background: var(--border);
         }
 
         .act h2 {
@@ -125,7 +142,7 @@
 
         .act p {
             font-size: 1rem;
-            color: #555;
+            color: var(--muted);
             line-height: 1.8;
             max-width: 680px;
             margin-bottom: 2rem;
@@ -133,31 +150,32 @@
         }
 
         .chart-card {
-            background: white;
+            background: var(--panel);
             border-radius: 8px;
             padding: 1.5rem;
             margin-bottom: 1.5rem;
-            border: 1px solid #e8e5de;
+            border: 1px solid var(--border);
+            box-shadow: 0 6px 18px rgba(23, 32, 51, 0.06);
         }
 
         .chart-title {
-            font-size: 0.85rem;
+            font-size: 0.95rem;
             font-weight: 600;
             font-family: sans-serif;
-            color: #1a1a1a;
+            color: var(--ink);
             margin-bottom: 0.25rem;
         }
 
         .chart-sub {
-            font-size: 0.75rem;
-            color: #888;
+            font-size: 0.8rem;
+            color: var(--soft-muted);
             font-family: sans-serif;
             margin-bottom: 1rem;
         }
 
         .chart-source {
-            font-size: 0.7rem;
-            color: #aaa;
+            font-size: 0.74rem;
+            color: var(--muted);
             font-family: sans-serif;
             margin-top: 0.75rem;
         }
@@ -175,8 +193,8 @@
         }
 
         footer {
-            background: #0C2340;
-            color: rgba(255, 255, 255, 0.5);
+            background: var(--navy);
+            color: rgba(255, 255, 255, 0.82);
             text-align: center;
             padding: 2rem;
             font-size: 0.8rem;
@@ -193,7 +211,7 @@
         <div class="container">
             <div class="hero-tag">Australia · Technology Workforce · 1984–2026</div>
             <h1>Australia's Digital Workforce: Boom, Bust & Beyond</h1>
-            <p>From 14,000 tech workers in 1984 to a record 383,000 — tracking the rise, the crashes, and what's next
+            <p>From 14,000 tech workers in 1984 to a record 383,000 tracking the rise, the crashes, and what's next
                 for Australia's technology talent.</p>
             <div class="hero-stats">
                 <div class="hero-stat">
@@ -218,13 +236,13 @@
             <div class="act-label">Act 1 · The big picture</div>
             <h2>Forty years of building a tech nation</h2>
             <p>Australia's technology workforce grew from a tiny niche to one of the country's largest professional sectors.
-                The path was turbulent — a dotcom boom and bust, a decade-long rebuild, a COVID surge, and a sharp
+                The path was turbulent a dotcom boom and bust, a decade-long rebuild, a COVID surge, and a sharp
                 correction after 2022.</p>
             <div class="chart-card">
                 <div class="chart-title">Computer System Design employment, Australia, 1984–2026</div>
                 <div class="chart-sub">Quarterly estimate of employed persons (thousands)</div>
                 <div id="chart1" style="width:100%"></div>
-                <div class="chart-source">Source: ABS Labour Force Survey, Table 06 — Computer System Design and Related
+                <div class="chart-source">Source: ABS Labour Force Survey, Table 06 Computer System Design and Related
                     Services</div>
             </div>
         </div>
@@ -232,43 +250,43 @@
         <!-- ACT 2 -->
         <div class="act">
             <div class="act-label">Act 2 · Where the jobs are</div>
-            <h2>Sydney and Melbourne dominate — but for how long?</h2>
+            <h2>Sydney and Melbourne dominate but for how long?</h2>
             <p>Australia's tech economy is heavily concentrated in two cities. Click any state on the map to explore its
-                vacancy profile. The geographic divide is stark — and growing.</p>
+                vacancy profile. The geographic divide is stark and growing.</p>
             <div class="grid-6040">
                 <div class="chart-card">
                     <div class="chart-title">ICT job vacancies by state, March 2026</div>
                     <div class="chart-sub">Total monthly vacancies across all ICT occupations</div>
                     <div id="chart2" style="width:100%"></div>
-                    <div class="chart-source">Source: Jobs and Skills Australia — Internet Vacancy Index, ANZSCO4, March
+                    <div class="chart-source">Source: Jobs and Skills Australia Internet Vacancy Index, ANZSCO4, March
                         2026</div>
                 </div>
                 <div class="chart-card">
                     <div class="chart-title">Tech workers by city, Feb 2026</div>
                     <div class="chart-sub">Information Media & Telecommunications employed (thousands)</div>
                     <div id="chart3" style="width:100%"></div>
-                    <div class="chart-source">Source: ABS EQ03 — Greater Capital City employment</div>
+                    <div class="chart-source">Source: ABS EQ03 Greater Capital City employment</div>
                 </div>
             </div>
         </div>
 
         <div class="act">
             <div class="act-label">Act 3 · Which roles are in demand</div>
-            <h2>Software dominates — web development collapses</h2>
+            <h2>Software dominates web development collapses</h2>
             <p>Not all tech roles tell the same story. Software programmers remain the most advertised occupation by far, while
-                demand for web developers has collapsed by over 80% since 2015 — likely displaced by AI tools. Click any
+                demand for web developers has collapsed by over 80% since 2015 likely displaced by AI tools. Click any
                 occupation in the legend to highlight it.</p>
             <div class="chart-card">
                 <div class="chart-title">ICT vacancy trends by occupation, 2006–2026</div>
-                <div class="chart-sub">Monthly job ad volume (3-month moving average) — national total</div>
+                <div class="chart-sub">Monthly job ad volume (3-month moving average) national total</div>
                 <div id="chart4" style="width:100%"></div>
-                <div class="chart-source">Source: Jobs and Skills Australia — Internet Vacancy Index, ANZSCO4</div>
+                <div class="chart-source">Source: Jobs and Skills Australia Internet Vacancy Index, ANZSCO4</div>
             </div>
             <div class="chart-card">
-                <div class="chart-title">ICT vacancy intensity — occupation × state</div>
+                <div class="chart-title">Average ICT vacancies by occupation and state</div>
                 <div class="chart-sub">Average monthly vacancies per occupation per state, March 2026</div>
                 <div id="chart5" style="width:100%"></div>
-                <div class="chart-source">Source: Jobs and Skills Australia — Internet Vacancy Index, ANZSCO4, March 2026</div>
+                <div class="chart-source" style="font-size:0.72rem; color: var(--muted)">Source: Jobs and Skills Australia Internet Vacancy Index, ANZSCO4, March 2026</div>
             </div>
         </div>
     
@@ -276,21 +294,21 @@
         <div class="act">
             <div class="act-label">Act 4 · Winners and losers</div>
             <h2>Who got hit hardest after the 2022 peak?</h2>
-            <p>Every ICT occupation lost ground after the 2022 hiring boom. But the scale of decline varies dramatically —
+            <p>Every ICT occupation lost ground after the 2022 hiring boom. But the scale of decline varies dramatically -
                 software programmers shed thousands of vacancies while web developers effectively disappeared from job boards
                 entirely.</p>
             <div class="grid-2">
                 <div class="chart-card">
                     <div class="chart-title">Occupation rankings over time</div>
-                    <div class="chart-sub">Rank by national vacancy volume — 1 = most in-demand</div>
+                    <div class="chart-sub">Rank by national vacancy volume 1 = most in-demand</div>
                     <div id="chart6" style="width:100%"></div>
-                    <div class="chart-source">Source: Jobs and Skills Australia — Internet Vacancy Index, ANZSCO4</div>
+                    <div class="chart-source">Source: Jobs and Skills Australia Internet Vacancy Index, ANZSCO4</div>
                 </div>
                 <div class="chart-card">
                     <div class="chart-title">2022 peak vs March 2026</div>
-                    <div class="chart-sub">Change in monthly vacancies per occupation — all declined</div>
+                    <div class="chart-sub">Change in monthly vacancies per occupation all declined</div>
                     <div id="chart7" style="width:100%"></div>
-                    <div class="chart-source">Source: Jobs and Skills Australia — Internet Vacancy Index, ANZSCO4</div>
+                    <div class="chart-source">Source: Jobs and Skills Australia Internet Vacancy Index, ANZSCO4</div>
                 </div>
             </div>
         </div>
@@ -298,29 +316,29 @@
         <!-- ACT 5 -->
         <div class="act">
             <div class="act-label">Act 5 · The talent gap</div>
-            <h2>Can't fill it locally — importing it from abroad</h2>
+            <h2>Can't fill it locally importing it from abroad</h2>
             <p>As tech job vacancies persisted despite falling employment, Australia increasingly turned to overseas skilled
-                workers. Meanwhile the business ecosystem keeps growing — but most tech companies are solo operators, not large
+                workers. Meanwhile the business ecosystem keeps growing but most tech companies are solo operators, not large
                 employers.</p>
             <div class="chart-card">
                 <div class="chart-title">Skilled visa grants by state, 2005–2026</div>
                 <div class="chart-sub">Total visa grants (primary + secondary applicants) per financial year</div>
                 <div id="chart8" style="width:100%"></div>
-                <div class="chart-source">Source: Department of Home Affairs — BP0014 Temporary Resident (Skilled) Visas Granted
+                <div class="chart-source">Source: Department of Home Affairs BP0014 Temporary Resident (Skilled) Visas Granted
                 </div>
             </div>
             <div class="grid-2">
                 <div class="chart-card">
                     <div class="chart-title">Tech businesses by state, Jun 2025</div>
-                    <div class="chart-sub">Computer System Design businesses — count by employer size</div>
+                    <div class="chart-sub">Computer System Design businesses count by employer size</div>
                     <div id="chart9" style="width:100%"></div>
-                    <div class="chart-source">Source: ABS Counts of Australian Businesses (8165.0) — Data Cube 2</div>
+                    <div class="chart-source">Source: ABS Counts of Australian Businesses (8165.0) Data Cube 2</div>
                 </div>
                 <div class="chart-card">
                     <div class="chart-title">Tech business entries vs exits, 2021–2025</div>
                     <div class="chart-sub">New businesses created vs businesses that closed each year</div>
                     <div id="chart10" style="width:100%"></div>
-                    <div class="chart-source">Source: ABS Counts of Australian Businesses (8165.0) — Data Cube 1</div>
+                    <div class="chart-source">Source: ABS Counts of Australian Businesses (8165.0) Data Cube 1</div>
                 </div>
             </div>
         </div>
@@ -328,22 +346,22 @@
         <!-- ACT 6 -->
         <div class="act">
             <div class="act-label">Act 6 · The full picture</div>
-            <h2>Jobs vs investment — two speeds</h2>
+            <h2>Jobs vs investment two speeds</h2>
             <p>Tech job vacancies and actual employment tell different stories across Australian states. NSW and Victoria
                 dominate both measures, but the gap between job ads and actual employment reveals where the real shortages are.
             </p>
             <div class="chart-card">
                 <div class="chart-title">ICT vacancies vs tech employment, 2006–2026</div>
-                <div class="chart-sub">Dual axis — left: total ICT vacancies (JSA), right: Computer System Design employed
+                <div class="chart-sub">Dual axis left: total ICT vacancies (JSA), right: Computer System Design employed
                     thousands (ABS)</div>
                 <div id="chart11" style="width:100%"></div>
                 <div class="chart-source">Source: Jobs and Skills Australia IVI · ABS Labour Force Survey Table 06</div>
             </div>
             <div class="chart-card">
                 <div class="chart-title">Tech employment by state, 1984–2026</div>
-                <div class="chart-sub">Information Media & Telecommunications employed (thousands) — quarterly</div>
+                <div class="chart-sub">Information Media & Telecommunications employed (thousands) quarterly</div>
                 <div id="chart12" style="width:100%"></div>
-                <div class="chart-source">Source: ABS Labour Force Survey — Table 05, States and Territories</div>
+                <div class="chart-source">Source: ABS Labour Force Survey Table 05, States and Territories</div>
             </div>
         </div>
     </div>
@@ -358,6 +376,68 @@
     </footer>
 
     <script>
+        const CHART_COLORS = {
+            ink: "#172033",
+            muted: "#4F5B66",
+            softMuted: "#6B7280",
+            border: "#D8D4CA",
+            grid: "#D8D4CA",
+            navy: "#0C2340",
+            blue: "#246FB2",
+            blueLight: "#D9EAF7",
+            red: "#C43D3D",
+            orange: "#B45F06",
+            green: "#177A5B",
+            purple: "#6B5FD3",
+            teal: "#0096A6",
+            brown: "#8C6D1F"
+        };
+
+        const OCCUPATION_PALETTE = [
+            CHART_COLORS.blue,
+            CHART_COLORS.green,
+            CHART_COLORS.brown,
+            CHART_COLORS.purple,
+            CHART_COLORS.muted,
+            CHART_COLORS.red,
+            CHART_COLORS.teal
+        ];
+
+        const BASE_CHART_CONFIG = {
+            font: "sans-serif",
+            view: { stroke: null },
+            axis: {
+                labelColor: CHART_COLORS.muted,
+                labelFontSize: 12,
+                titleColor: CHART_COLORS.ink,
+                titleFontSize: 13,
+                titleFontWeight: 600,
+                gridColor: CHART_COLORS.grid,
+                gridOpacity: 0.7,
+                tickColor: CHART_COLORS.border,
+                domainColor: CHART_COLORS.border
+            },
+            legend: {
+                labelColor: CHART_COLORS.muted,
+                labelFontSize: 12,
+                titleColor: CHART_COLORS.ink,
+                titleFontSize: 13,
+                titleFontWeight: 600
+            }
+        };
+
+        function withAccessibleConfig(spec) {
+            const existing = spec.config || {};
+            spec.config = {
+                ...BASE_CHART_CONFIG,
+                ...existing,
+                view: { ...BASE_CHART_CONFIG.view, ...(existing.view || {}) },
+                axis: { ...BASE_CHART_CONFIG.axis, ...(existing.axis || {}) },
+                legend: { ...BASE_CHART_CONFIG.legend, ...(existing.legend || {}) }
+            };
+            return spec;
+        }
+
         const spec1 = {
                 "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
                 "width": 900,
@@ -366,14 +446,14 @@
                 "data": { "url": "data/abs_computer_system_design.csv" },
                 "layer": [
                     {
-                        "mark": { "type": "area", "color": "#378ADD", "opacity": 0.08 },
+                        "mark": { "type": "area", "color": CHART_COLORS.blue, "opacity": 0.12 },
                         "encoding": {
                             "x": { "field": "date", "type": "temporal", "axis": { "title": null, "format": "%Y", "tickCount": 10 } },
-                            "y": { "field": "employed_000s", "type": "quantitative", "axis": { "title": "Employed (thousands)", "gridColor": "#f0ede6" } }
+                            "y": { "field": "employed_000s", "type": "quantitative", "axis": { "title": "Employed (thousands)", "gridColor": CHART_COLORS.grid } }
                         }
                     },
                     {
-                        "mark": { "type": "line", "color": "#378ADD", "strokeWidth": 2.5 },
+                        "mark": { "type": "line", "color": CHART_COLORS.blue, "strokeWidth": 2.5 },
                         "encoding": {
                             "x": { "field": "date", "type": "temporal" },
                             "y": { "field": "employed_000s", "type": "quantitative" },
@@ -396,8 +476,8 @@
                             "x": { "field": "date", "type": "temporal" },
                             "y": { "field": "y", "type": "quantitative" },
                             "color": {
-                                "condition": { "test": "datum.label === '2022 peak ▲'", "value": "#E24B4A" },
-                                "value": "#378ADD"
+                                "condition": { "test": "datum.label === '2022 peak ▲'", "value": CHART_COLORS.red },
+                                "value": CHART_COLORS.blue
                             },
                             "tooltip": [{ "field": "label", "type": "nominal" }]
                         }
@@ -410,14 +490,14 @@
                                 { "date": "2025-02-01", "y": 313.7, "label": "Post-layoffs" }
                             ]
                         },
-                        "mark": { "type": "text", "dy": -12, "fontSize": 11 },
+                        "mark": { "type": "text", "dy": -12, "fontSize": 12, "fontWeight": 600 },
                         "encoding": {
                             "x": { "field": "date", "type": "temporal" },
                             "y": { "field": "y", "type": "quantitative" },
                             "text": { "field": "label" },
                             "color": {
-                                "condition": { "test": "datum.label === '2022 peak ▲'", "value": "#E24B4A" },
-                                "value": "#378ADD"
+                                "condition": { "test": "datum.label === '2022 peak ▲'", "value": CHART_COLORS.red },
+                                "value": CHART_COLORS.blue
                             }
                         }
                     }
@@ -425,12 +505,13 @@
                 "config": { "view": { "stroke": null }, "font": "sans-serif" }
             };
 
-            vegaEmbed('#chart1', spec1, { actions: false }).catch(console.error);
+            vegaEmbed('#chart1', withAccessibleConfig(spec1), { actions: false }).catch(console.error);
 
            const spec2 = {
                 "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
                 "width": 500,
                 "height": 360,
+                "padding": { "left": 8, "right": 8, "top": 8, "bottom": 8 },
                 "autosize": { "type": "fit", "contains": "padding" },
                 "data": {
                     "url": "data/australia_states.geojson",
@@ -444,8 +525,8 @@
                                 { "state_name": "New South Wales", "vacancies": 2737 },
                                 { "state_name": "Victoria", "vacancies": 1991 },
                                 { "state_name": "Queensland", "vacancies": 1382 },
-                                { "state_name": "Western Australia", "vacancies": 611 },
                                 { "state_name": "South Australia", "vacancies": 421 },
+                                { "state_name": "Western Australia", "vacancies": 611 },
                                 { "state_name": "Australian Capital Territory", "vacancies": 468 },
                                 { "state_name": "Tasmania", "vacancies": 87 },
                                 { "state_name": "Northern Territory", "vacancies": 31 }
@@ -453,15 +534,16 @@
                         },
                         "key": "state_name",
                         "fields": ["vacancies"]
-                    }
+                    },
+                    "default": 0
                 }],
-                "mark": { "type": "geoshape", "stroke": "white", "strokeWidth": 1 },
+                "mark": { "type": "geoshape", "stroke": CHART_COLORS.muted, "strokeWidth": 1.35 },
                 "encoding": {
                     "color": {
                         "field": "vacancies",
                         "type": "quantitative",
-                        "scale": { "scheme": "blues" },
-                        "legend": { "title": "Vacancies" }
+                        "scale": { "domain": [0, 2800], "range": [CHART_COLORS.blueLight, "#B5D4EE", "#8CBDE2", "#5F99CC", CHART_COLORS.blue] },
+                        "legend": { "title": "ICT vacancies", "format": ",.0f" }
                     },
                     "tooltip": [
                         { "field": "properties.STATE_NAME", "type": "nominal", "title": "State" },
@@ -470,23 +552,22 @@
                 },
                 "projection": {
                     "type": "mercator",
-                    "center": [134, -28],
-                    "scale": 430,
-                    "translate": [250, 190]
+                    "center": [133, -27],
+                    "scale": 720
                 },
                 "config": { "view": { "stroke": null } }
             };
 
             const spec3 = {
                 "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-                "width": 300,
+                "width": 340,
                 "height": 360,
+                "padding": { "left": 8, "right": 90, "top": 8, "bottom": 8 },
                 "autosize": { "type": "fit", "contains": "padding" },
                 "projection": {
                     "type": "mercator",
-                    "center": [134, -28],
-                    "scale": 250,
-                    "translate": [150, 190]
+                    "center": [133, -27],
+                    "scale": 470
                 },
                 "layer": [
                     {
@@ -494,7 +575,7 @@
                             "url": "data/australia_states.geojson",
                             "format": { "type": "json", "property": "features" }
                         },
-                        "mark": { "type": "geoshape", "fill": "#e8e5de", "stroke": "white", "strokeWidth": 0.5 }
+                        "mark": { "type": "geoshape", "fill": "#E3E9F0", "stroke": CHART_COLORS.muted, "strokeWidth": 1.2 }
                     },
                     {
                         "data": {
@@ -508,28 +589,52 @@
                                 { "city": "Canberra", "lat": -35.28, "lon": 149.13, "employed": 4.3 }
                             ]
                         },
-                        "mark": { "type": "circle", "opacity": 0.6, "color": "#378ADD" },
+                        "mark": { "type": "circle", "opacity": 0.9, "color": CHART_COLORS.blue, "stroke": CHART_COLORS.navy, "strokeWidth": 1.1, "clip": false },
                         "encoding": {
                             "latitude": { "field": "lat", "type": "quantitative" },
                             "longitude": { "field": "lon", "type": "quantitative" },
                             "size": {
                                 "field": "employed",
                                 "type": "quantitative",
-                                "scale": { "range": [50, 2500] },
-                                "legend": { "title": "Employed (000s)" }
+                                "scale": { "range": [60, 1600] },
+                                "legend": {
+                                    "title": "Tech workers (000s)",
+                                    "format": ".0f",
+                                    "orient": "right",
+                                    "direction": "vertical"
+                                }
                             },
                             "tooltip": [
                                 { "field": "city", "type": "nominal", "title": "City" },
                                 { "field": "employed", "type": "quantitative", "title": "Employed (000s)", "format": ".1f" }
                             ]
                         }
+                    },
+                    {
+                        "data": {
+                            "values": [
+                                { "city": "Sydney", "lat": -33.87, "lon": 151.21 },
+                                { "city": "Melbourne", "lat": -37.81, "lon": 144.96 },
+                                { "city": "Brisbane", "lat": -27.47, "lon": 153.02 },
+                                { "city": "Perth", "lat": -31.95, "lon": 115.86 },
+                                { "city": "Adelaide", "lat": -34.93, "lon": 138.60 },
+                                { "city": "Hobart", "lat": -42.88, "lon": 147.33 },
+                                { "city": "Canberra", "lat": -35.28, "lon": 149.13 }
+                            ]
+                        },
+                        "mark": { "type": "text", "dx": 8, "dy": -8, "fontSize": 11, "fontWeight": 700, "color": CHART_COLORS.ink, "clip": false },
+                        "encoding": {
+                            "latitude": { "field": "lat", "type": "quantitative" },
+                            "longitude": { "field": "lon", "type": "quantitative" },
+                            "text": { "field": "city", "type": "nominal" }
+                        }
                     }
                 ],
                 "config": { "view": { "stroke": null } }
             };
 
-            vegaEmbed('#chart2', spec2, { actions: false }).catch(console.error);
-            vegaEmbed('#chart3', spec3, { actions: false }).catch(console.error);
+            vegaEmbed('#chart2', withAccessibleConfig(spec2), { actions: false }).catch(console.error);
+            vegaEmbed('#chart3', withAccessibleConfig(spec3), { actions: false }).catch(console.error);
 
 
             // ── CHART 4: Multi-line occupation trends ───────────────────────────────────
@@ -551,7 +656,7 @@
                         },
                         "y": {
                             "field": "vacancies", "type": "quantitative",
-                            "axis": { "title": "Monthly vacancies", "gridColor": "#f0ede6" }
+                            "axis": { "title": "Monthly vacancies", "gridColor": CHART_COLORS.grid }
                         },
                         "color": {
                             "field": "occupation", "type": "nominal",
@@ -565,7 +670,7 @@
                                     "ICT Managers",
                                     "Multimedia Specialists and Web Developers"
                                 ],
-                                "range": ["#378ADD", "#1D9E75", "#888780", "#7F77DD", "#B4B2A9", "#BA7517", "#E24B4A"]
+                                "range": OCCUPATION_PALETTE
                             },
                             "legend": {
                                 "title": "Occupation",
@@ -587,8 +692,9 @@
                 // ── CHART 5: Heatmap occupation × state ────────────────────────────────────
                 const spec5 = {
                     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-                    "width": 900,
-                    "height": 220,
+                    "width": 860,
+                    "height": 185,
+                    "padding": { "left": 10, "right": 10, "top": 4, "bottom": 4 },
                     "autosize": { "type": "fit", "contains": "padding" },
                     "data": { "url": "data/jsa_ict_timeseries.csv" },
                     "transform": [
@@ -597,50 +703,79 @@
                         { "filter": "datum.vacancies > 0" },
                         { "filter": "indexof(['NSW','VIC','QLD','WA','SA','ACT','TAS','NT'], datum.state) >= 0" },
                         {
-                            "calculate": "datum.state === 'NSW' ? 'New South Wales' : datum.state === 'VIC' ? 'Victoria' : datum.state === 'QLD' ? 'Queensland' : datum.state === 'WA' ? 'Western Australia' : datum.state === 'SA' ? 'South Australia' : datum.state === 'ACT' ? 'Australian Capital Territory' : datum.state === 'TAS' ? 'Tasmania' : 'Northern Territory'",
-                            "as": "state_label"
+                            "calculate": "datum.state === 'NSW' ? 'NSW' : datum.state === 'VIC' ? 'VIC' : datum.state === 'QLD' ? 'QLD' : datum.state === 'WA' ? 'WA' : datum.state === 'SA' ? 'SA' : datum.state === 'ACT' ? 'ACT' : datum.state === 'TAS' ? 'TAS' : 'NT'",
+                            "as": "state_abbr"
                         },
                         {
                             "aggregate": [{ "op": "mean", "field": "vacancies", "as": "avg_vacancies" }],
-                            "groupby": ["occupation", "state_label"]
+                            "groupby": ["occupation", "state_abbr"]
+                        },
+                        {
+                            "joinaggregate": [{ "op": "sum", "field": "avg_vacancies", "as": "state_total" }],
+                            "groupby": ["state_abbr"]
+                        },
+                        {
+                            "joinaggregate": [{ "op": "sum", "field": "avg_vacancies", "as": "occupation_total" }],
+                            "groupby": ["occupation"]
                         }
                     ],
-                    "mark": { "type": "rect", "stroke": "white", "strokeWidth": 1 },
-                    "encoding": {
-                        "x": {
-                            "field": "state_label", "type": "ordinal",
-                            "axis": { "title": null, "labelAngle": -30 },
-                            "sort": ["New South Wales", "Victoria", "Queensland", "Western Australia", "South Australia", "Australian Capital Territory", "Tasmania", "Northern Territory"]
+                    "layer": [
+                        {
+                            "mark": { "type": "rect", "stroke": "white", "strokeWidth": 1.2 },
+                            "encoding": {
+                                "x": {
+                                    "field": "state_abbr", "type": "ordinal",
+                                    "axis": { "title": null, "labelAngle": 0 },
+                                    "sort": { "field": "state_total", "order": "descending" }
+                                },
+                                "y": {
+                                    "field": "occupation", "type": "ordinal",
+                                    "axis": {
+                                        "title": null,
+                                        "labelLimit": 1000,
+                                        "labelExpr": "replace(replace(replace(datum.label, ', and ', ',\\nand '), ' and ', '\\nand '), ' Specialists', '\\nSpecialists')"
+                                    },
+                                    "sort": { "field": "occupation_total", "order": "descending" }
+                                },
+                                "color": {
+                                    "field": "avg_vacancies", "type": "quantitative",
+                                    "scale": { "type": "log", "range": ["#C5DDF0", "#95BFE0", "#5F99CC", CHART_COLORS.blue] },
+                                    "legend": {
+                                        "title": "Average monthly vacancies",
+                                        "values": [10, 25, 50, 100, 250, 500, 1000, 2000]
+                                    }
+                                },
+                                "tooltip": [
+                                    { "field": "occupation", "type": "nominal", "title": "Occupation" },
+                                    { "field": "state_abbr", "type": "nominal", "title": "State" },
+                                    { "field": "avg_vacancies", "type": "quantitative", "title": "Avg vacancies", "format": ".0f" }
+                                ]
+                            }
                         },
-                        "y": {
-                            "field": "occupation", "type": "ordinal",
-                            "axis": { "title": null, "labelLimit": 300 },
-                            "sort": [
-                                "Software and Applications Programmers",
-                                "ICT Business and Systems Analysts",
-                                "ICT Support Technicians",
-                                "Database and Systems Administrators, and ICT Security Specialists",
-                                "ICT Support and Test Engineers",
-                                "ICT Managers",
-                                "Multimedia Specialists and Web Developers"
-                            ]
-                        },
-                        "color": {
-                            "field": "avg_vacancies", "type": "quantitative",
-                            "scale": { "scheme": "blues" },
-                            "legend": { "title": "Avg vacancies" }
-                        },
-                        "tooltip": [
-                            { "field": "occupation", "type": "nominal", "title": "Occupation" },
-                            { "field": "state_label", "type": "nominal", "title": "State" },
-                            { "field": "avg_vacancies", "type": "quantitative", "title": "Avg vacancies", "format": ".0f" }
-                        ]
-                    },
+                        {
+                            "mark": { "type": "text", "fontSize": 11, "fontWeight": 600 },
+                            "encoding": {
+                                "x": {
+                                    "field": "state_abbr", "type": "ordinal",
+                                    "sort": { "field": "state_total", "order": "descending" }
+                                },
+                                "y": {
+                                    "field": "occupation", "type": "ordinal",
+                                    "sort": { "field": "occupation_total", "order": "descending" }
+                                },
+                                "text": { "field": "avg_vacancies", "type": "quantitative", "format": ".0f" },
+                                "color": {
+                                    "condition": { "test": "datum.avg_vacancies >= 320", "value": "white" },
+                                    "value": CHART_COLORS.ink
+                                }
+                            }
+                        }
+                    ],
                     "config": { "view": { "stroke": null }, "font": "sans-serif" }
                 };
 
-                vegaEmbed('#chart4', spec4, { actions: false }).catch(console.error);
-                vegaEmbed('#chart5', spec5, { actions: false }).catch(console.error);
+                vegaEmbed('#chart4', withAccessibleConfig(spec4), { actions: false }).catch(console.error);
+                vegaEmbed('#chart5', withAccessibleConfig(spec5), { actions: false }).catch(console.error);
 
 
                 // ── CHART 6: Bump chart ─────────────────────────────────────────────────────
@@ -693,7 +828,7 @@
                                                 "ICT Managers",
                                                 "Multimedia Specialists and Web Developers"
                                             ],
-                                            "range": ["#378ADD", "#1D9E75", "#888780", "#7F77DD", "#B4B2A9", "#BA7517", "#E24B4A"]
+                                            "range": OCCUPATION_PALETTE
                                         },
                                         "legend": null
                                     },
@@ -737,7 +872,7 @@
                                         "groupby": ["occupation"]
                                     }
                                 ],
-                                "mark": { "type": "rule", "strokeWidth": 2, "color": "#E24B4A", "opacity": 0.6 },
+                                "mark": { "type": "rule", "strokeWidth": 2, "color": CHART_COLORS.muted, "strokeDash": [4, 2], "opacity": 0.7 },
                                 "encoding": {
                                     "y": { "field": "occupation", "type": "nominal", "axis": { "title": null, "labelLimit": 300 } },
                                     "x": { "field": "Peak 2022", "type": "quantitative", "axis": { "title": "Monthly vacancies" } },
@@ -745,13 +880,18 @@
                                 }
                             },
                             {
-                                "mark": { "type": "point", "filled": true, "size": 80 },
+                                "mark": { "type": "point", "filled": true, "size": 90, "stroke": CHART_COLORS.ink, "strokeWidth": 0.6 },
                                 "encoding": {
                                     "y": { "field": "occupation", "type": "nominal" },
                                     "x": { "field": "avg_vac", "type": "quantitative" },
                                     "color": {
                                         "field": "period", "type": "nominal",
-                                        "scale": { "domain": ["Peak 2022", "Mar 2026"], "range": ["#378ADD", "#E24B4A"] },
+                                        "scale": { "domain": ["Peak 2022", "Mar 2026"], "range": [CHART_COLORS.blue, CHART_COLORS.red] },
+                                        "legend": null
+                                    },
+                                    "shape": {
+                                        "field": "period", "type": "nominal",
+                                        "scale": { "domain": ["Peak 2022", "Mar 2026"], "range": ["circle", "triangle-up"] },
                                         "legend": { "title": "Period" }
                                     },
                                     "tooltip": [
@@ -765,8 +905,8 @@
                         "config": { "view": { "stroke": null }, "font": "sans-serif" }
                     };
 
-                    vegaEmbed('#chart6', spec6, { actions: false }).catch(console.error);
-                    vegaEmbed('#chart7', spec7, { actions: false }).catch(console.error);
+                    vegaEmbed('#chart6', withAccessibleConfig(spec6), { actions: false }).catch(console.error);
+                    vegaEmbed('#chart7', withAccessibleConfig(spec7), { actions: false }).catch(console.error);
     // ── CHART 8: Visa grants stacked area ──────────────────────────────────────
     const spec8 = {
         "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -788,16 +928,16 @@
         "encoding": {
             "x": {
                 "field": "year", "type": "ordinal",
-                "axis": { "title": null, "labelAngle": -45, "labelFontSize": 10 }
+                "axis": { "title": null, "labelAngle": -45, "labelFontSize": 11 }
             },
             "y": {
                 "field": "grants_num", "type": "quantitative",
                 "stack": "normalize",
-                "axis": { "title": "Share of grants", "format": "%", "gridColor": "#f0ede6" }
+                "axis": { "title": "Share of grants", "format": "%", "gridColor": CHART_COLORS.grid }
             },
             "color": {
                 "field": "state", "type": "nominal",
-                "scale": { "scheme": "tableau10" },
+                "scale": { "range": [CHART_COLORS.blue, CHART_COLORS.green, CHART_COLORS.purple, CHART_COLORS.orange, CHART_COLORS.muted, CHART_COLORS.red, CHART_COLORS.teal, "#5E81AC"] },
                 "legend": { "title": "State" }
             },
             "tooltip": [
@@ -809,7 +949,7 @@
         "config": { "view": { "stroke": null }, "font": "sans-serif" }
     };
 
-    // ── CHART 9: Packed bubble — businesses by state ────────────────────────────
+    // ── CHART 9: Packed bubble businesses by state ────────────────────────────
     const spec9 = {
         "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
         "width": 400,
@@ -834,13 +974,13 @@
             "y": {
                 "field": "count_num", "type": "quantitative",
                 "stack": true,
-                "axis": { "title": "Business count", "gridColor": "#f0ede6" }
+                "axis": { "title": "Business count", "gridColor": CHART_COLORS.grid }
             },
             "color": {
                 "field": "size_band", "type": "nominal",
                 "scale": {
                     "domain": ["non_employing", "1_4_emp", "5_19_emp", "20_199_emp", "200plus_emp"],
-                    "range": ["#c6dbef", "#9ecae1", "#6baed6", "#3182bd", "#08519c"]
+                    "range": [CHART_COLORS.blueLight, "#AFCDE6", "#83AFD4", "#4F84BC", CHART_COLORS.blue]
                 },
                 "legend": {
                     "title": "Employer size",
@@ -878,13 +1018,13 @@
             },
             "y": {
                 "field": "count_num", "type": "quantitative",
-                "axis": { "title": "Business count", "gridColor": "#f0ede6" }
+                "axis": { "title": "Business count", "gridColor": CHART_COLORS.grid }
             },
             "color": {
                 "field": "type", "type": "nominal",
                 "scale": {
                     "domain": ["entries_total", "exits_cancellations"],
-                    "range": ["#1D9E75", "#E24B4A"]
+                    "range": [CHART_COLORS.green, CHART_COLORS.red]
                 },
                 "legend": {
                     "title": null,
@@ -902,9 +1042,9 @@
         "config": { "view": { "stroke": null }, "font": "sans-serif" }
     };
 
-    vegaEmbed('#chart8', spec8, { actions: false }).catch(console.error);
-    vegaEmbed('#chart9', spec9, { actions: false }).catch(console.error);
-    vegaEmbed('#chart10', spec10, { actions: false }).catch(console.error);
+    vegaEmbed('#chart8', withAccessibleConfig(spec8), { actions: false }).catch(console.error);
+    vegaEmbed('#chart9', withAccessibleConfig(spec9), { actions: false }).catch(console.error);
+    vegaEmbed('#chart10', withAccessibleConfig(spec10), { actions: false }).catch(console.error);
 
 
 
@@ -930,15 +1070,15 @@
                             "groupby": ["date"]
                         }
                     ],
-                    "mark": { "type": "area", "color": "#378ADD", "opacity": 0.15 },
+                    "mark": { "type": "area", "color": CHART_COLORS.blue, "opacity": 0.18 },
                     "encoding": {
                         "x": { "field": "date", "type": "temporal", "axis": { "title": null, "format": "%Y" } },
                         "y": {
                             "field": "total_vac", "type": "quantitative",
                             "axis": {
                                 "title": "Total ICT vacancies",
-                                "titleColor": "#378ADD",
-                                "gridColor": "#f0ede6",
+                                "titleColor": CHART_COLORS.blue,
+                                "gridColor": CHART_COLORS.grid,
                                 "titlePadding": 10
                             }
                         }
@@ -953,7 +1093,7 @@
                             "groupby": ["date"]
                         }
                     ],
-                    "mark": { "type": "line", "color": "#378ADD", "strokeWidth": 2 },
+                    "mark": { "type": "line", "color": CHART_COLORS.blue, "strokeWidth": 2.2 },
                     "encoding": {
                         "x": { "field": "date", "type": "temporal" },
                         "y": { "field": "total_vac", "type": "quantitative", "axis": null },
@@ -968,17 +1108,17 @@
                     "transform": [
                         { "calculate": "toNumber(datum.employed_000s)", "as": "emp_num" }
                     ],
-                    "mark": { "type": "line", "color": "#E24B4A", "strokeWidth": 2, "strokeDash": [4, 2] },
+                    "mark": { "type": "line", "color": CHART_COLORS.red, "strokeWidth": 2.2, "strokeDash": [6, 3] },
                     "encoding": {
                         "x": { "field": "date", "type": "temporal" },
                         "y": {
                             "field": "emp_num", "type": "quantitative",
                             "axis": {
                                 "title": "Employed (thousands)",
-                                "titleColor": "#E24B4A",
+                                "titleColor": CHART_COLORS.red,
                                 "orient": "right",
                                 "offset": 10,
-                                "labelColor": "#E24B4A",
+                                "labelColor": CHART_COLORS.red,
                                 "titlePadding": 10
                             },
                             "scale": { "zero": false }
@@ -1022,11 +1162,11 @@
                 },
                 "y": {
                     "field": "imt_avg_annual", "type": "quantitative",
-                    "axis": { "title": "Employed (thousands)", "gridColor": "#f0ede6" }
+                    "axis": { "title": "Employed (thousands)", "gridColor": CHART_COLORS.grid }
                 },
                 "color": {
                     "field": "state_name", "type": "nominal",
-                    "scale": { "scheme": "tableau10" },
+                    "scale": { "range": [CHART_COLORS.blue, CHART_COLORS.green, CHART_COLORS.purple, CHART_COLORS.orange, CHART_COLORS.muted] },
                     "legend": { "title": "State" }
                 },
                 "tooltip": [
@@ -1038,8 +1178,8 @@
             "config": { "view": { "stroke": null }, "font": "sans-serif" }
         };
 
-        vegaEmbed('#chart11', spec11, { actions: false }).catch(console.error);
-        vegaEmbed('#chart12', spec12, { actions: false }).catch(console.error);
+        vegaEmbed('#chart11', withAccessibleConfig(spec11), { actions: false }).catch(console.error);
+        vegaEmbed('#chart12', withAccessibleConfig(spec12), { actions: false }).catch(console.error);
 
     </script>
 

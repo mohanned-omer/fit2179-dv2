@@ -314,6 +314,12 @@
             margin-bottom: 0.8rem;
         }
 
+        #chart5-subtitle {
+            display: block;
+            text-align: left;
+            margin-left: 0;
+        }
+
         .chart-source {
             color: var(--text-muted);
             font-size: 0.72rem;
@@ -391,8 +397,19 @@
         .eco-pill-strip {
             display: flex;
             flex-wrap: wrap;
+            align-items: center;
             gap: 0.35rem;
             margin: 1.15rem 0 1.4rem;
+        }
+
+        .eco-pill-label {
+            display: block;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 0.4rem;
         }
 
         .eco-pill {
@@ -517,7 +534,12 @@
 
         #chart8-new {
             min-height: 390px;
-            touch-action: none;
+        }
+
+        .act4-map-frame {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
         }
 
         .act4-card .vega-embed {
@@ -1266,6 +1288,7 @@
                 <strong>Major hubs</strong> combine high job density with solid income premiums, while <strong>high-income specialists</strong> earn the largest wage premiums despite smaller local job bases. <strong>Consultant-heavy</strong> areas show the opposite: many solo businesses, very few employees. Use the filter below to highlight each type across both charts simultaneously.
             </div>
 
+            <span class="eco-pill-label">Ecosystem filter</span>
             <div class="eco-pill-strip" id="act4-pills">
                 <button class="eco-pill all-pill active" type="button" data-category="All">All types</button>
             </div>
@@ -1295,7 +1318,9 @@
                         <button class="map-view-btn" type="button" data-map-view="nt">NT</button>
                         <button class="map-view-btn" type="button" data-map-view="act">ACT</button>
                     </div>
-                    <div id="chart8-new" class="chart-host"></div>
+                    <div class="act4-map-frame">
+                        <div id="chart8-new" class="chart-host"></div>
+                    </div>
                     <p class="act4-source">Source: ABS ASGS SA2 2021 centroids · ABS Jobs in Australia Table 3</p>
                 </article>
             </div>
@@ -1339,6 +1364,15 @@
                         <summary>How to read this chart</summary>
                         <p>The size of each coloured tile represents that business structure's share of all digital jobs in Australia. Larger tile = more jobs. Click a tile to reveal which ecosystem categories make up that structure's workforce. "Solo-heavy" means the suburb's digital businesses are dominated by sole traders and single-person operators — not that every business is a sole trader.</p>
                     </details>
+
+                    <!-- Stat callout row -->
+                    <div id="chart10-stats" style="
+                        display: grid;
+                        grid-template-columns: repeat(4, minmax(0, 1fr));
+                        gap: 0.75rem;
+                        margin: 0.85rem 0 1rem;
+                    "></div>
+
                     <div id="chart10" style="width:100%"></div>
                     <div class="chart-source">Source: SA2 Digital Ecosystem Dataset, 2022-23</div>
                 </article>
@@ -2082,7 +2116,7 @@
                                 <span style="width:18px;height:0;border-top:3px solid #6b7280;display:inline-block;"></span>
                                 Fall from peak to latest
                             </span>
-                            c<span style="display:inline-flex;align-items:center;gap:0.4rem;color:#374151;font-size:0.78rem;font-weight:700;">
+                            <span style="display:inline-flex;align-items:center;gap:0.4rem;color:#374151;font-size:0.78rem;font-weight:700;">
                                 <span style="width:13px;height:13px;border-radius:50%;display:inline-block;background:#b91c1c;border:2px solid white;box-shadow:0 0 0 1px #b91c1c;"></span>
                                 Latest value
                             </span>
@@ -2312,11 +2346,11 @@
                     "Australian Capital Territory": { abbr: "ACT", lon: 149.1, lat: -35.55 }
                 };
                 const ACT4_STATE_ZOOM_LABEL_POINTS = {
-                    "New South Wales": { abbr: "NSW", lon: 142.0, lat: -29.8 },
+                    "New South Wales": { abbr: "NSW", lon: 146.5, lat: -32.8 },
                     "Victoria": { abbr: "VIC", lon: 142.2, lat: -36.2, align: "left" },
-                    "Queensland": { abbr: "QLD", lon: 146.5, lat: -22.5, align: "center" },
-                    "Western Australia": { abbr: "WA", lon: 119.0, lat: -26.2, align: "center" },
-                    "South Australia": { abbr: "SA", lon: 136.8, lat: -32.6, align: "center" },
+                    "Queensland": { abbr: "QLD", lon: 144.9, lat: -22.5, align: "center" },
+                    "Western Australia": { abbr: "WA", lon: 121.2, lat: -26.2, align: "center" },
+                    "South Australia": { abbr: "SA", lon: 136.8, lat: -30.7, align: "center" },
                     "Tasmania": { abbr: "TAS", lon: 146.8, lat: -42.2, align: "center" },
                     "Northern Territory": { abbr: "NT", lon: 133.1, lat: -18.3, align: "center" },
                     "Australian Capital Territory": { abbr: "ACT", lon: 149.08, lat: -35.68, align: "center", baseline: "bottom" }
@@ -2327,18 +2361,17 @@
                 let act4MapView = "national";
                 const act4MapZoom = { scale: 1, tx: 0, ty: 0 };
 
-                function setupAct4MapTouch(host) {
+                function setupAct4MapZoomButtons(host) {
                     if (host._act4Abort) host._act4Abort.abort();
                     const ac = new AbortController();
                     host._act4Abort = ac;
 
                     const embed = host.querySelector(".vega-embed");
                     if (!embed) return;
+                    const frame = host.closest(".act4-map-frame") || host;
+                    frame.style.overflow = "hidden";
                     embed.style.transformOrigin = "0 0";
                     embed.style.willChange = "transform";
-
-                    let pinchBase = null;
-                    let lastTap = 0;
 
                     function applyTransform() {
                         embed.style.transform =
@@ -2346,65 +2379,28 @@
                     }
                     applyTransform();
 
-                    function touchDist(t) {
-                        return Math.hypot(t[1].clientX - t[0].clientX, t[1].clientY - t[0].clientY);
+                    function zoomAtMapPoint(x, y, nextScale) {
+                        const rect = frame.getBoundingClientRect();
+                        const ox = x == null ? rect.width / 2 : x;
+                        const oy = y == null ? rect.height / 2 : y;
+                        const oldScale = act4MapZoom.scale;
+                        const clampedScale = Math.max(0.8, Math.min(10, nextScale));
+                        act4MapZoom.scale = clampedScale;
+                        act4MapZoom.tx = ox - (ox - act4MapZoom.tx) * (clampedScale / oldScale);
+                        act4MapZoom.ty = oy - (oy - act4MapZoom.ty) * (clampedScale / oldScale);
+                        applyTransform();
                     }
-                    function touchMid(t) {
-                        return {
-                            x: (t[0].clientX + t[1].clientX) / 2,
-                            y: (t[0].clientY + t[1].clientY) / 2
-                        };
-                    }
 
-                    // capture: true fires our handler before Vega's inner SVG listeners
-                    host.addEventListener("touchstart", e => {
-                        if (e.touches.length === 2) {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            pinchBase = {
-                                dist: touchDist(e.touches),
-                                mid: touchMid(e.touches),
-                                scale: act4MapZoom.scale,
-                                tx: act4MapZoom.tx,
-                                ty: act4MapZoom.ty
-                            };
-                        } else if (e.touches.length === 1) {
-                            const now = Date.now();
-                            if (now - lastTap < 300) {
-                                act4MapZoom.scale = 1;
-                                act4MapZoom.tx = 0;
-                                act4MapZoom.ty = 0;
-                                applyTransform();
-                            }
-                            lastTap = now;
-                        }
-                    }, { passive: false, capture: true, signal: ac.signal });
+                    const zoomIn = frame.querySelector("#act4MapZoomIn");
+                    const zoomOut = frame.querySelector("#act4MapZoomOut");
 
-                    host.addEventListener("touchmove", e => {
-                        if (e.touches.length === 2 && pinchBase) {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            const newDist = touchDist(e.touches);
-                            const newMid = touchMid(e.touches);
-                            const ratio = newDist / pinchBase.dist;
-                            const newScale = Math.max(0.8, Math.min(10, pinchBase.scale * ratio));
+                    zoomIn?.addEventListener("click", () => {
+                        zoomAtMapPoint(null, null, act4MapZoom.scale * 1.25);
+                    }, { signal: ac.signal });
 
-                            const rect = host.getBoundingClientRect();
-                            const ox = pinchBase.mid.x - rect.left;
-                            const oy = pinchBase.mid.y - rect.top;
-                            const driftX = newMid.x - pinchBase.mid.x;
-                            const driftY = newMid.y - pinchBase.mid.y;
-
-                            act4MapZoom.scale = newScale;
-                            act4MapZoom.tx = ox + driftX - (ox - pinchBase.tx) * (newScale / pinchBase.scale);
-                            act4MapZoom.ty = oy + driftY - (oy - pinchBase.ty) * (newScale / pinchBase.scale);
-                            applyTransform();
-                        }
-                    }, { passive: false, capture: true, signal: ac.signal });
-
-                    host.addEventListener("touchend", e => {
-                        if (e.touches.length < 2) pinchBase = null;
-                    }, { passive: true, capture: true, signal: ac.signal });
+                    zoomOut?.addEventListener("click", () => {
+                        zoomAtMapPoint(null, null, act4MapZoom.scale / 1.25);
+                    }, { signal: ac.signal });
                 }
 
                 function act4EcoColor(category) {
@@ -2486,6 +2482,7 @@
                             lon: point.lon,
                             lat: point.lat,
                             text: isNational ? `${point.abbr} ${premiumLabel}` : `${point.abbr} avg ${premiumLabel}`,
+                            labelSize: isNational ? 11 : 15,
                             align: point.align || "center",
                             baseline: point.baseline || "middle",
                             dx: point.align === "left" ? 4 : 0,
@@ -2744,7 +2741,6 @@
                                 "data": { "values": buildAct4StateLabelValues() },
                                 "mark": {
                                     "type": "text",
-                                    "fontSize": 11,
                                     "fontWeight": 400,
                                     "color": "#334155"
                                 },
@@ -2755,6 +2751,7 @@
                                     "align": { "field": "align", "type": "nominal", "scale": null, "legend": null },
                                     "baseline": { "field": "baseline", "type": "nominal", "scale": null, "legend": null },
                                     "dx": { "field": "dx", "type": "quantitative" },
+                                    "size": { "field": "labelSize", "type": "quantitative", "scale": null, "legend": null },
                                     "tooltip": [
                                         { "field": "state_name", "title": "State" },
                                         { "field": "avg_income_premium_pct", "title": "Average income premium", "format": ".1%" },
@@ -2771,7 +2768,7 @@
                     const host = document.querySelector("#chart8-new");
                     if (!host || !act4Rows.length) return;
                     vegaEmbed(host, withAccessibleConfig(buildAct4DotMapSpec()), VEGA_EMBED_OPTIONS)
-                        .then(() => setupAct4MapTouch(host))
+                        .then(() => setupAct4MapZoomButtons(host))
                         .catch(error => {
                             console.error(error);
                             showAct4Message("#chart8-new", "Chart 7 could not render.");
@@ -2932,7 +2929,7 @@
                 if (!legend) return;
                 legend.setAttribute("aria-label", "Chart 8 ecosystem colour legend");
                 legend.innerHTML = `
-                    <span class="income-premium-legend-title">Ecosystem</span>
+                    <span class="income-premium-legend-title">Ecosystem Filter</span>
                     <span class="ecosystem-legend-item"
                           role="button"
                           tabindex="0"
@@ -3151,6 +3148,96 @@
                     if (!validRows.length) { showMessage("Chart 9 has no valid rows."); return; }
                     const totalJobs = validRows.reduce((sum, d) => sum + d.digital_jobs, 0);
                     if (!Number.isFinite(totalJobs) || totalJobs <= 0) { showMessage("Chart 9: zero total jobs."); return; }
+
+                    // ── Stat callout row ─────────────────────────────────────────────────────
+                    function renderChart10Stats() {
+                        const statsHost = document.getElementById("chart10-stats");
+                        if (!statsHost) return;
+
+                        const structureStats = structureOrder.map(s => {
+                            const sRows = validRows.filter(d => d.structure === s);
+                            const jobs  = sRows.reduce((sum, d) => sum + d.digital_jobs, 0);
+                            const share = jobs / totalJobs;
+
+                            const premiums = sRows
+                                .map(d => Number(d.digital_income_premium))
+                                .filter(v => Number.isFinite(v) && v > 0);
+                            const avgPremium = premiums.length
+                                ? premiums.reduce((a, b) => a + b, 0) / premiums.length
+                                : 0;
+
+                            const bizPerSa2 = sRows.length
+                                ? sRows.reduce((sum, d) => sum + Number(d.digital_businesses), 0) / sRows.length
+                                : 0;
+
+                            return { structure: s, share, avgPremium, bizPerSa2, sa2Count: sRows.length };
+                        }).filter(d => d.sa2Count > 0);
+
+                        const solo      = structureStats.find(d => d.structure === "Solo-heavy");
+                        const large     = structureStats.find(d => d.structure === "Large-employer");
+
+                        const premiumGap = large && solo ? large.avgPremium - solo.avgPremium : null;
+
+                        const stats = [
+                            {
+                                value: solo  ? `${(solo.share * 100).toFixed(0)}%` : "--",
+                                label: "of digital jobs are in solo-heavy areas",
+                                sub:   "The dominant structure by far",
+                                color: structureFill["Solo-heavy"]
+                            },
+                            {
+                                value: large ? `$${Math.round(large.avgPremium / 1000)}k` : "--",
+                                label: "avg income premium in large-employer areas",
+                                sub:   solo ? `vs $${Math.round(solo.avgPremium / 1000)}k in solo-heavy` : "",
+                                color: structureFill["Large-employer"]
+                            },
+                            {
+                                value: premiumGap !== null ? `$${Math.round(premiumGap / 1000)}k` : "--",
+                                label: "income premium gap: large vs solo",
+                                sub:   "Volume ≠ value",
+                                color: "#1e293b"
+                            },
+                            {
+                                value: large ? large.sa2Count.toLocaleString() : "--",
+                                label: "SA2 regions with large-employer structure",
+                                sub:   solo  ? `vs ${solo.sa2Count.toLocaleString()} solo-heavy regions` : "",
+                                color: structureFill["Large-employer"]
+                            }
+                        ];
+
+                        statsHost.innerHTML = stats.map(s => `
+                            <div style="
+                                background: #fff;
+                                border: 1px solid #e2e8f0;
+                                border-top: 3px solid ${s.color};
+                                border-radius: 6px;
+                                padding: 0.85rem 1rem;
+                            ">
+                                <div style="
+                                    font-size: 1.6rem;
+                                    font-weight: 800;
+                                    color: ${s.color};
+                                    line-height: 1;
+                                    margin-bottom: 0.3rem;
+                                    font-family: Georgia, serif;
+                                ">${s.value}</div>
+                                <div style="
+                                    font-size: 0.75rem;
+                                    font-weight: 600;
+                                    color: #1e293b;
+                                    line-height: 1.35;
+                                    margin-bottom: 0.2rem;
+                                ">${s.label}</div>
+                                <div style="
+                                    font-size: 0.68rem;
+                                    color: #94a3b8;
+                                    line-height: 1.3;
+                                ">${s.sub}</div>
+                            </div>
+                        `).join("");
+                    }
+
+                    renderChart10Stats();
 
                     // ── tileValues (squarified) ───────────────────────────────────────────────
                     function tileValues(values) {
